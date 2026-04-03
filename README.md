@@ -18,9 +18,9 @@ A data-driven analysis of Starbucks customer reviews on Yelp, benchmarked agains
 
 ## Key Findings
 
-**Starbucks averages 2.90 stars — 1.07 below the market benchmark of 3.97.** However, Dunkin' performs worse at 2.05 stars with a 71.2% critical review rate. The gap is a chain-format issue, not unique to Starbucks.
+**Starbucks averages 2.90 stars — 1.11 below the market benchmark of 4.01.** However, Dunkin' performs worse at 2.05 stars with a 71.2% critical review rate. The gap is a chain-format issue, not unique to Starbucks.
 
-**Service is the dominant variable.** It drives 80.7% of positive reviews and 76.7% of negative reviews. With a 43.6% positive rate against a 46.5% failure rate, front-line staff execution is the single largest determinant of customer outcome.
+**Service is the dominant variable.** 75.6% of Starbucks reviews mention service. With a 44.4% positive rate against a 46.0% failure rate, front-line staff execution is the single largest determinant of customer outcome.
 
 **Weekend demand degrades quality.** Saturday and Sunday produce the lowest average ratings (2.71 stars) despite the highest review volumes. The weekend critical rate reaches 53.2% versus 45.0% on weekdays.
 

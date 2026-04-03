@@ -184,25 +184,54 @@ def map_user_activity_tier(review_count: pd.Series) -> pd.Series:
 
 
 # ---------------------------------------------------------------------------
-# 6. Topic Tag — rule-based operational theme classification
+# 6. Topic Tags — rule-based multi-label operational theme classification
 # ---------------------------------------------------------------------------
 
 _TOPIC_PATTERNS = {
-    "Service":       r"\b(staff|barista|service|rude|friendly|cashier|employee|attitude|wait|slow|fast|line|order|wrong)\b",
-    "Food Quality":  r"\b(drink|coffee|latte|espresso|taste|flavor|quality|stale|fresh|matcha|frappuccino|food|sandwich|pastry)\b",
-    "Price":         r"\b(price|expensive|cheap|cost|value|overpriced|worth|pricey|afford)\b",
-    "Ambiance":      r"\b(ambiance|atmosphere|vibe|music|loud|quiet|cozy|seating|decor|clean|dirty|noise|crowded)\b",
-    "Wait Time":     r"\b(wait|waited|waiting|slow|minutes|forever|quick|fast|queue|line|busy)\b",
-    "Cleanliness":   r"\b(clean|dirty|mess|trash|restroom|bathroom|hygiene|filthy|spotless)\b",
+    # People and interaction quality — excludes queue/wait keywords to keep
+    # this dimension focused on staff behavior and service execution.
+    "Service":      r"\b(staff|barista|service|rude|friendly|cashier|employee|attitude|"
+                    r"order|wrong|helpful|attentive|manager|crew|polite|courteous|"
+                    r"unprofessional|ignored|dismissive|welcoming|slow)\b",
+
+    # Drink and food product quality — broadened to capture the full range of
+    # beverage and food vocabulary common in coffee-shop reviews.
+    "Food Quality": r"\b(drink|coffee|latte|espresso|taste|flavor|quality|stale|fresh|"
+                    r"matcha|frappuccino|food|sandwich|pastry|tea|chai|brew|beverage|"
+                    r"syrup|bland|bitter|watery|iced|milk|oat|almond|cream|sweet|"
+                    r"mocha|americano|menu|cup|shot)\b",
+
+    # Pricing and value perception.
+    "Price":        r"\b(price|expensive|cheap|cost|value|overpriced|worth|pricey|"
+                    r"afford|charge|tip|dollar|money)\b",
+
+    # Physical environment and in-store experience.
+    "Ambiance":     r"\b(ambiance|atmosphere|vibe|music|loud|quiet|cozy|seating|decor|"
+                    r"noise|crowded|comfortable|spacious|cramped|wifi|parking|"
+                    r"outdoor|patio|layout|interior|tables|chairs)\b",
+
+    # Queue and throughput — deliberately overlaps with Service on "slow" so
+    # that "slow service in a long line" is tagged for both dimensions.
+    "Wait Time":    r"\b(wait|waited|waiting|minutes|forever|quick|fast|queue|line|"
+                    r"busy|rush|delay|prompt|speedy|backed|hour|long)\b",
+
+    # Facility hygiene and physical cleanliness.
+    "Cleanliness":  r"\b(clean|dirty|mess|trash|restroom|bathroom|hygiene|filthy|"
+                    r"spotless|smell|smells|gross|sanitary|sticky)\b",
 }
 
 
-def map_topic_tag(text: pd.Series) -> pd.Series:
+def map_topic_tags(text: pd.Series) -> pd.Series:
     """
-    Assign a primary operational topic tag to each review using keyword matching.
+    Assign one or more operational topic tags to each review using keyword matching.
 
-    Classification follows a priority order; the first matching topic is assigned.
-    Reviews with no keyword match are labeled 'General'.
+    Unlike a single-label approach, every pattern that matches is included so that
+    a review mentioning both a barista and a drink quality issue contributes to both
+    Service and Food Quality counts. Tags are returned as a pipe-separated string
+    (e.g. "Service|Food Quality"). Reviews with no keyword match are labeled 'General'.
+
+    Multi-label filtering downstream:
+        df["topic_tags"].str.contains("Food Quality", regex=False)
 
     Topics:
       Service | Food Quality | Price | Ambiance | Wait Time | Cleanliness | General
@@ -210,6 +239,7 @@ def map_topic_tag(text: pd.Series) -> pd.Series:
     Returns
     -------
     pd.Series of str
+        Pipe-separated topic labels, e.g. "Service|Food Quality".
     """
     compiled = {
         topic: re.compile(pattern, re.IGNORECASE)
@@ -218,10 +248,9 @@ def map_topic_tag(text: pd.Series) -> pd.Series:
 
     def _tag(t):
         t = str(t)
-        for topic, pattern in compiled.items():
-            if pattern.search(t):
-                return topic
-        return "General"
+        matched = [topic for topic, pattern in compiled.items()
+                   if pattern.search(t)]
+        return "|".join(matched) if matched else "General"
 
     return text.fillna("").apply(_tag)
 
@@ -254,13 +283,18 @@ def apply_all_mappings(df: pd.DataFrame) -> pd.DataFrame:
     df["review_length"]      = map_review_length(df["text"])
     df["length_tier"]        = map_length_tier(df["review_length"])
     df["user_activity_tier"] = map_user_activity_tier(df["user_review_count"] if "user_review_count" in df.columns else pd.Series(dtype="float64"))
-    df["topic_tag"]          = map_topic_tag(df["text"])
+    df["topic_tags"]         = map_topic_tags(df["text"])
     df                       = map_datetime_fields(df, date_col="date")
 
     print(f"  star_tier        → {df['star_tier'].value_counts().to_dict()}")
     print(f"  brand_category   → {df['brand_category'].value_counts().to_dict()}")
     print(f"  length_tier      → {df['length_tier'].value_counts().to_dict()}")
     print(f"  user_tier        → {df['user_activity_tier'].value_counts().to_dict()}")
-    print(f"  topic_tag        → {df['topic_tag'].value_counts().to_dict()}")
+    # topic_tags is multi-label; count individual topic occurrences
+    from collections import Counter
+    topic_counts = Counter(
+        t for tags in df["topic_tags"] for t in tags.split("|")
+    )
+    print(f"  topic_tags       → {dict(topic_counts)}")
 
     return df
