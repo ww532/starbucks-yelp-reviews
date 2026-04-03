@@ -12,3 +12,5 @@ outputs/notebooks_html/
 outputs/full_report.html
 outputs/report.html
 outputs/index.html
+.claude/
+outputs/figures/plotly.min.js

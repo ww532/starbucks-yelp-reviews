@@ -4,23 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Starbucks on Yelp: Sentiment and Review Analysis</title>
+<meta name="description" content="Sentiment analysis of 381,999 Yelp reviews from 8,203 coffee-chain locations across 13 U.S. states, 2017-2021. Starbucks benchmarked against Dunkin' and independent cafes.">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body class="font-serif min-h-screen">
 
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-surface focus:text-accent focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
+
 <!-- ═══════════════════════════════════════ HERO ═══ -->
-<header class="relative overflow-hidden border-b border-green/40 px-5 sm:px-10 pt-12 sm:pt-16 pb-10 sm:pb-12"
-        style="background:linear-gradient(160deg,#162a1e 0%,#0c1510 60%)">
-  <!-- green top bar -->
-  <div class="absolute top-0 inset-x-0 h-[3px]"
-       style="background:linear-gradient(90deg,#006241 0%,#00754A 50%,transparent 100%)"></div>
-  <!-- ambient glow -->
-  <div class="absolute -top-30 -right-20 w-100 h-100 rounded-full pointer-events-none"
-       style="background:radial-gradient(circle,rgba(0,98,65,0.1) 0%,transparent 70%)"></div>
+<header class="hero-header relative overflow-hidden border-b border-green/40 px-5 sm:px-10 pt-12 sm:pt-16 pb-10 sm:pb-12">
+  <div class="hero-bar absolute top-0 inset-x-0 h-[3px]"></div>
+  <div class="hero-glow absolute -top-30 -right-20 w-100 h-100 rounded-full pointer-events-none"></div>
 
   <div class="max-w-6xl mx-auto relative z-10">
     <p class="font-mono text-[11px] tracking-[0.18em] uppercase text-accent mb-5">
-      Portfolio · Data Analysis · NLP · Sentiment
+      Data Analysis · NLP · Sentiment
     </p>
     <h1 class="font-serif text-[clamp(28px,5vw,48px)] font-normal tracking-tight leading-[1.1] text-text-bright mb-4">
       Starbucks on Yelp: Sentiment<br>and Review Analysis
@@ -54,15 +52,16 @@
 
 
 <!-- ═══════════════════════════════════ MAIN CONTENT ═══ -->
-<main class="max-w-6xl mx-auto px-5 sm:px-10 py-10 sm:py-16">
+<main id="main-content" class="max-w-6xl mx-auto px-5 sm:px-10 py-10 sm:py-16">
 
   <!-- ─── EXECUTIVE OVERVIEW ─── -->
-  <div class="mb-16 pb-14 border-b border-green/40">
+  <section class="mb-16 pb-14 border-b border-green/40" aria-labelledby="overview-heading">
+    <h2 id="overview-heading" class="sr-only">Executive Overview</h2>
     <p class="text-[17px] leading-[1.75] text-text-body max-w-[72ch] mb-10">
-      This report covers 381,999 Yelp reviews from 8,203 coffee-chain locations across 13 U.S. states,
-      2017–2021. The focus is Starbucks — compared against Dunkin' (6,866 reviews) and the broader
-      independent café market to understand where the gaps are and what customers keep writing about.
-      VADER sentiment scoring, rule-based topic tagging, and reviewer segmentation are used throughout.
+      381,999 Yelp reviews from 8,203 coffee-chain locations across 13 U.S. states, 2017 through 2021.
+      Starbucks is the focus, benchmarked against Dunkin' (6,866 reviews) and the independent café
+      market. The analysis uses VADER sentiment scoring, rule-based topic tagging, and reviewer
+      segmentation.
     </p>
     <!-- 4 key findings -->
     <div class="divide-y divide-green/25 border-t border-green/25">
@@ -72,7 +71,7 @@
         </div>
         <div class="flex-1">
           <span class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-mid block mb-2">Brand Gap</span>
-          <p class="text-[14px] text-text-body leading-snug">Starbucks beats Dunkin' by 0.85 stars on average, but both chains sit well below the independent café benchmark of 4.01★.</p>
+          <p class="text-[14px] text-text-body leading-snug">Starbucks averages 0.85 stars above Dunkin', but both chains fall well short of the independent café average of 4.01★.</p>
         </div>
       </div>
       <div class="flex gap-6 sm:gap-10 py-5">
@@ -81,29 +80,29 @@
         </div>
         <div class="flex-1">
           <span class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-mid block mb-2">Service Positive Rate</span>
-          <p class="text-[14px] text-text-body leading-snug">Three out of four Starbucks reviews mention service in some form. Of those, 44.4% are positive and 46.0% are critical. The margin is thin enough that the result looks more like a staffing lottery than a consistent product.</p>
+          <p class="text-[14px] text-text-body leading-snug">3/4 of Starbucks reviews mention service. Of those, 44.4% are positive and 46.0% are critical. Service quality is the single biggest factor in how customers rate their visit.</p>
         </div>
       </div>
       <div class="flex gap-6 sm:gap-10 py-5">
         <div class="w-32 shrink-0 pt-0.5">
-          <span class="font-serif text-[32px] font-normal text-accent leading-none">24.0%</span>
+          <span class="font-serif text-[32px] font-normal text-accent leading-none">33.7%</span>
         </div>
         <div class="flex-1">
           <span class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-mid block mb-2">One-Star Rate — Starbucks</span>
-          <p class="text-[14px] text-text-body leading-snug">Nearly 1-in-4 Starbucks ratings is a 1-star. The distribution is heavy at both ends — a split customer base, not a broadly disappointed one.</p>
+          <p class="text-[14px] text-text-body leading-snug">1/3 of Starbucks ratings is a 1-star, making it the largest rating group. More people give 1-star than 5-star. The distribution skews negative.</p>
         </div>
       </div>
       <div class="flex gap-6 sm:gap-10 py-5">
         <div class="w-32 shrink-0 pt-0.5">
-          <span class="font-serif text-[32px] font-normal text-accent leading-none">+0.09★</span>
+          <span class="font-serif text-[32px] font-normal text-accent leading-none">−0.28★</span>
         </div>
         <div class="flex-1">
-          <span class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-mid block mb-2">Weekend Premium</span>
-          <p class="text-[14px] text-text-body leading-snug">Weekend visits average 0.09★ higher than weekdays. Small gap, but consistent — probably a staffing effect more than anything about the product.</p>
+          <span class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-mid block mb-2">Weekend Gap</span>
+          <p class="text-[14px] text-text-body leading-snug">Weekend reviews average 2.71★ against 2.99★ on weekdays. Critical rate jumps from 45.0% to 53.2% on weekends. Ratings drop and critical rates spike precisely when visit volume peaks.</p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
 
   <!-- ─── NB 05 · REVIEW VOLUME TRENDS ─── -->
@@ -113,10 +112,9 @@
       <h2 class="text-xl font-normal text-text-section tracking-tight">Review Volume Trends</h2>
     </div>
     <p class="section-intro">
-      All brands peaked in 2019, then dropped 44% in 2020 when pandemic restrictions cut in-store
-      dining. By 2021, volume had recovered to about 58% of the 2019 peak — and every brand followed
-      roughly the same arc. The dataset covers 508 cities across 13 states. Arizona and Nevada
-      contribute the most reviews; Nevada also has the highest average rating of any state here.
+      11,675 Starbucks reviews across 2017–2021, peaking at 2,996 in 2019 before the pandemic
+      hit. 508 cities, 13 states. Florida and Pennsylvania have the most reviews. Indiana rates
+      highest.
     </p>
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
       <div class="chart-card">
@@ -126,7 +124,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Annual Review Volume by Brand</span>
-          <a class="card-overlay" href="./05_volume_annual.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Annual Review Volume by Brand"></a>
+          <a class="card-overlay" href="./05_volume_annual.html" rel="noopener noreferrer" aria-label="Open chart: Annual Review Volume by Brand"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -136,7 +134,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Year-over-Year Volume Trends</span>
-          <a class="card-overlay" href="./05_volume_by_year.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Year-over-Year Volume Trends"></a>
+          <a class="card-overlay" href="./05_volume_by_year.html" rel="noopener noreferrer" aria-label="Open chart: Year-over-Year Volume Trends"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -146,7 +144,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Review Volume by State</span>
-          <a class="card-overlay" href="./05_volume_by_state.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Review Volume by State"></a>
+          <a class="card-overlay" href="./05_volume_by_state.html" rel="noopener noreferrer" aria-label="Open chart: Review Volume by State"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -156,7 +154,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Average Star Rating by State</span>
-          <a class="card-overlay" href="./05_rating_by_state.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Average Star Rating by State"></a>
+          <a class="card-overlay" href="./05_rating_by_state.html" rel="noopener noreferrer" aria-label="Open chart: Average Star Rating by State"></a>
         </div>
       </div>
     </div>
@@ -164,7 +162,7 @@
       <div class="w-[3px] bg-mid shrink-0"></div>
       <div class="px-5 py-4">
         <span class="block font-mono text-[9.5px] tracking-[0.16em] uppercase text-accent mb-1.5">Key Finding</span>
-        <p class="text-[14px] text-text-body leading-relaxed">Starbucks review volume dropped 44% in 2020 and had only recovered to 58% of its 2019 peak by 2021. Coffee-shop visits changed after the pandemic, and the data reflects that.</p>
+        <p class="text-[14px] text-text-body leading-relaxed">Volume dropped 44% in 2020 and only recovered to 58% of the 2019 peak by 2021. Florida (2,061) and Pennsylvania (2,042) lead in review count. Indiana has the highest average rating at 3.28★.</p>
       </div>
     </div>
   </div>
@@ -177,10 +175,9 @@
       <h2 class="text-xl font-normal text-text-section tracking-tight">Rating Distribution</h2>
     </div>
     <p class="section-intro">
-      Starbucks ratings split at the extremes: 38.2% are 5-star, 24.0% are 1-star. There isn't much
-      in the middle. This is a polarized customer base, not one that's broadly disappointed.
-      VADER sentiment scores follow a similar pattern — gradually declining from 2019 onward, a trend
-      that started before the pandemic and kept going after it.
+      Starbucks averages 2.90★, the market 3.97★. The distribution is U-shaped, heavy at both
+      ends. Both star ratings and VADER sentiment dropped year over year from 2017 to 2021. The
+      market didn't.
     </p>
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
       <div class="chart-card">
@@ -190,7 +187,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Star Rating Distribution</span>
-          <a class="card-overlay" href="./06_star_distribution.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Star Rating Distribution"></a>
+          <a class="card-overlay" href="./06_star_distribution.html" rel="noopener noreferrer" aria-label="Open chart: Star Rating Distribution"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -200,7 +197,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Star Tier Composition by Brand</span>
-          <a class="card-overlay" href="./06_star_tier.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Star Tier Composition by Brand"></a>
+          <a class="card-overlay" href="./06_star_tier.html" rel="noopener noreferrer" aria-label="Open chart: Star Tier Composition by Brand"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -210,7 +207,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Rating Trend Over Time</span>
-          <a class="card-overlay" href="./06_rating_trend.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Rating Trend Over Time"></a>
+          <a class="card-overlay" href="./06_rating_trend.html" rel="noopener noreferrer" aria-label="Open chart: Rating Trend Over Time"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -220,7 +217,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Sentiment Score Trend Over Time</span>
-          <a class="card-overlay" href="./06_sentiment_trend.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Sentiment Score Trend Over Time"></a>
+          <a class="card-overlay" href="./06_sentiment_trend.html" rel="noopener noreferrer" aria-label="Open chart: Sentiment Score Trend Over Time"></a>
         </div>
       </div>
     </div>
@@ -228,7 +225,7 @@
       <div class="w-[3px] bg-mid shrink-0"></div>
       <div class="px-5 py-4">
         <span class="block font-mono text-[9.5px] tracking-[0.16em] uppercase text-accent mb-1.5">Key Finding</span>
-        <p class="text-[14px] text-text-body leading-relaxed">A 5-star plurality isn't reassuring when 1-in-4 reviews is a 1-star. For a premium-priced brand, that's a real signal: some customers are consistently having bad experiences, not just lukewarm ones.</p>
+        <p class="text-[14px] text-text-body leading-relaxed">1-star is the largest group at 33.7%, ahead of 5-star at 29.0%. The Starbucks-to-market gap widened from 0.95 stars (2017) to 1.21 (2021). VADER sentiment fell from 0.301 to 0.207 while the market held around 0.69.</p>
       </div>
     </div>
   </div>
@@ -241,11 +238,10 @@
       <h2 class="text-xl font-normal text-text-section tracking-tight">Voice of Customer</h2>
     </div>
     <p class="section-intro">
-      Reviews are tagged using multi-label keyword matching — a single review can carry more
-      than one topic tag. "The barista was rude and my latte tasted burnt" would be tagged
-      both Service and Food Quality. Topic counts therefore reflect every review that mentions
-      a topic, not just its dominant theme. Service generates the most review volume of any
-      category; Price has the lowest positive rate (23.8%), but on far fewer mentions.
+      Each review gets 1+ topic tags through keyword matching. A review about a rude
+      barista and a burnt latte picks up both Service and Food Quality. So the topic counts add
+      up to more than 11,675 total reviews. Service has the highest volume of any topic. Price
+      has the highest failure rate, but on fewer mentions.
     </p>
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
       <div class="chart-card">
@@ -255,7 +251,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Topic Volume by Brand</span>
-          <a class="card-overlay" href="./07_topic_volume.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Topic Volume by Brand"></a>
+          <a class="card-overlay" href="./07_topic_volume.html" rel="noopener noreferrer" aria-label="Open chart: Topic Volume by Brand"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -265,7 +261,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Topic Positive Rate by Brand</span>
-          <a class="card-overlay" href="./07_topic_rate.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Topic Positive Rate by Brand"></a>
+          <a class="card-overlay" href="./07_topic_rate.html" rel="noopener noreferrer" aria-label="Open chart: Topic Positive Rate by Brand"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -275,7 +271,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Word Cloud — Positive Reviews</span>
-          <a class="card-overlay" href="./07_wordcloud_positive.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Word Cloud — Positive Reviews"></a>
+          <a class="card-overlay" href="./07_wordcloud_positive.html" rel="noopener noreferrer" aria-label="Open chart: Word Cloud — Positive Reviews"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -285,7 +281,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Word Cloud — Critical Reviews</span>
-          <a class="card-overlay" href="./07_wordcloud_critical.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Word Cloud — Critical Reviews"></a>
+          <a class="card-overlay" href="./07_wordcloud_critical.html" rel="noopener noreferrer" aria-label="Open chart: Word Cloud — Critical Reviews"></a>
         </div>
       </div>
     </div>
@@ -293,7 +289,7 @@
       <div class="w-[3px] bg-mid shrink-0"></div>
       <div class="px-5 py-4">
         <span class="block font-mono text-[9.5px] tracking-[0.16em] uppercase text-accent mb-1.5">Key Finding</span>
-        <p class="text-[14px] text-text-body leading-relaxed">Ambiance is the one topic where Starbucks wins more than it loses: 62.2% positive. Service tells the opposite story. It generates the most reviews by volume, and positive vs. critical is nearly split (44.4% vs. 46.0%). That makes it the topic with both the most upside and the most damage to manage.</p>
+        <p class="text-[14px] text-text-body leading-relaxed">Ambiance is the one topic where Starbucks comes out ahead: 62.2% positive. Service is the opposite. It generates the most volume, and the positive/critical split is nearly even at 44.4% vs. 46.0%.</p>
       </div>
     </div>
   </div>
@@ -306,11 +302,9 @@
       <h2 class="text-xl font-normal text-text-section tracking-tight">Reviewer Segmentation</h2>
     </div>
     <p class="section-intro">
-      Reviewers were split into four tiers by lifetime Yelp activity: Casual (under 10 reviews),
-      Regular (10–50), Power (50–200), and Elite (200+). Casual reviewers rate Starbucks at 2.43★
-      on average, the lowest of any tier. Elite reviewers average 3.60★. First-time or infrequent
-      reviewers appear to write disproportionately after bad experiences, which pulls the casual
-      average down and skews the brand's overall score.
+      Reviewers split into four tiers by lifetime Yelp activity: Casual (under 10 reviews),
+      Regular (10–50), Power (50–200), and Elite (200+). Casual reviewers make up 32.4% of
+      Starbucks reviews and have the highest critical rate of any tier.
     </p>
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-[3fr_2fr] sm:gap-8 sm:items-start">
       <div class="chart-card">
@@ -320,12 +314,12 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Star Rating by Reviewer Activity Tier</span>
-          <a class="card-overlay" href="./08_reviewer_tier.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Star Rating by Reviewer Activity Tier"></a>
+          <a class="card-overlay" href="./08_reviewer_tier.html" rel="noopener noreferrer" aria-label="Open chart: Star Rating by Reviewer Activity Tier"></a>
         </div>
       </div>
       <div class="pt-2">
         <span class="block font-mono text-[9.5px] tracking-[0.16em] uppercase text-accent mb-3">Key Finding</span>
-        <p class="text-[14px] text-text-body leading-relaxed">Casual reviewers rate Starbucks 1.17★ lower than Elite ones. On Yelp, first-time reviewers tend to write because something went wrong, not because it went right. That self-selection pulls the casual average down hard.</p>
+        <p class="text-[14px] text-text-body leading-relaxed">Casual reviewers rate Starbucks 1.17★ lower than Elite ones. On Yelp, first-time reviewers mostly write because something went wrong. That skews the casual average.</p>
       </div>
     </div>
   </div>
@@ -338,10 +332,52 @@
       <h2 class="text-xl font-normal text-text-section tracking-tight">Brand Benchmarking Scorecard</h2>
     </div>
     <p class="section-intro">
-      This scorecard compares Starbucks and Dunkin' across five topics: Service, Food Quality,
-      Ambiance, Wait Time, and Cleanliness. Starbucks leads on all five. The rose chart puts all five
-      on the same plot for easy comparison.
+      Starbucks and Dunkin' compared across five topics: Service, Food Quality, Ambiance, Wait Time,
+      and Cleanliness. Starbucks leads on all five. The rose chart shows them on one plot.
     </p>
+
+    <!-- Brand comparison table -->
+    <div class="overflow-x-auto mb-8">
+      <table class="w-full text-[13px] font-mono border-collapse">
+        <thead>
+          <tr class="border-b border-green/40 text-left">
+            <th scope="col" class="py-3 pr-4 text-accent text-[10px] tracking-[0.12em] uppercase">Brand</th>
+            <th scope="col" class="py-3 px-4 text-accent text-[10px] tracking-[0.12em] uppercase text-right">Reviews</th>
+            <th scope="col" class="py-3 px-4 text-accent text-[10px] tracking-[0.12em] uppercase text-right">Avg ★</th>
+            <th scope="col" class="py-3 px-4 text-accent text-[10px] tracking-[0.12em] uppercase text-right">% Positive</th>
+            <th scope="col" class="py-3 px-4 text-accent text-[10px] tracking-[0.12em] uppercase text-right">% Critical</th>
+            <th scope="col" class="py-3 pl-4 text-accent text-[10px] tracking-[0.12em] uppercase text-right">Sentiment</th>
+          </tr>
+        </thead>
+        <tbody class="text-text-body">
+          <tr class="border-b border-green/20">
+            <td class="py-2.5 pr-4 text-text-bright">Starbucks</td>
+            <td class="py-2.5 px-4 text-right">11,675</td>
+            <td class="py-2.5 px-4 text-right">2.90</td>
+            <td class="py-2.5 px-4 text-right">42.4%</td>
+            <td class="py-2.5 px-4 text-right">47.6%</td>
+            <td class="py-2.5 pl-4 text-right">0.277</td>
+          </tr>
+          <tr class="border-b border-green/20">
+            <td class="py-2.5 pr-4 text-text-bright">Dunkin'</td>
+            <td class="py-2.5 px-4 text-right">6,866</td>
+            <td class="py-2.5 px-4 text-right">2.05</td>
+            <td class="py-2.5 px-4 text-right">21.5%</td>
+            <td class="py-2.5 px-4 text-right">71.2%</td>
+            <td class="py-2.5 pl-4 text-right">−0.020</td>
+          </tr>
+          <tr>
+            <td class="py-2.5 pr-4 text-text-bright">Independent Café</td>
+            <td class="py-2.5 px-4 text-right">362,334</td>
+            <td class="py-2.5 px-4 text-right">4.01</td>
+            <td class="py-2.5 px-4 text-right">73.7%</td>
+            <td class="py-2.5 px-4 text-right">17.2%</td>
+            <td class="py-2.5 pl-4 text-right">0.706</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-[3fr_2fr] sm:gap-8 sm:items-start">
       <div class="chart-card">
         <div class="chart-thumb" style="padding-bottom:92.31%">
@@ -350,12 +386,12 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Brand Benchmarking Scorecard (Rose Chart)</span>
-          <a class="card-overlay" href="./09_scorecard_rose.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Brand Benchmarking Scorecard"></a>
+          <a class="card-overlay" href="./09_scorecard_rose.html" rel="noopener noreferrer" aria-label="Open chart: Brand Benchmarking Scorecard"></a>
         </div>
       </div>
       <div class="pt-2">
         <span class="block font-mono text-[9.5px] tracking-[0.16em] uppercase text-accent mb-3">Key Finding</span>
-        <p class="text-[14px] text-text-body leading-relaxed">Starbucks leads Dunkin' on all five topics. Service has the widest gap: 44.4% vs. 22.1%, a 22-point spread. Wait Time is the narrowest at 39.9% vs. 25.2%. Both chains score well below independent cafés across the board.</p>
+        <p class="text-[14px] text-text-body leading-relaxed">Starbucks leads Dunkin' on all five topics. Service has the widest gap at 44.4% vs. 22.1%. Wait Time is closest at 39.9% vs. 25.2%. Both chains fall well short of independent cafés on every measure.</p>
       </div>
     </div>
   </div>
@@ -368,9 +404,8 @@
       <h2 class="text-xl font-normal text-text-section tracking-tight">Time Pattern Analysis</h2>
     </div>
     <p class="section-intro">
-      Ratings shift depending on when people visit. Weekends average 0.09★ higher than weekdays
-      for Starbucks — a small but consistent gap. July and August show a mild dip in monthly
-      averages, which lines up with peak traffic season. More customers, longer waits, lower ratings.
+      31.9% of Starbucks reviews come from weekends. Ratings and critical rates shift depending
+      on the day and month. Wednesday is the best day; September is the worst month.
     </p>
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
       <div class="chart-card">
@@ -380,7 +415,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Rating by Day of Week</span>
-          <a class="card-overlay" href="./10_dow_rating.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Rating by Day of Week"></a>
+          <a class="card-overlay" href="./10_dow_rating.html" rel="noopener noreferrer" aria-label="Open chart: Rating by Day of Week"></a>
         </div>
       </div>
       <div class="chart-card">
@@ -390,7 +425,7 @@
         </div>
         <div class="flex items-center justify-between px-4 py-3 gap-2">
           <span class="text-[13px] text-text-card leading-snug flex-1">Monthly Rating Trends</span>
-          <a class="card-overlay" href="./10_monthly_rating.html" target="_blank" rel="noopener noreferrer" aria-label="Open chart: Monthly Rating Trends"></a>
+          <a class="card-overlay" href="./10_monthly_rating.html" rel="noopener noreferrer" aria-label="Open chart: Monthly Rating Trends"></a>
         </div>
       </div>
     </div>
@@ -398,7 +433,7 @@
       <div class="w-[3px] bg-mid shrink-0"></div>
       <div class="px-5 py-4">
         <span class="block font-mono text-[9.5px] tracking-[0.16em] uppercase text-accent mb-1.5">Key Finding</span>
-        <p class="text-[14px] text-text-body leading-relaxed">31.9% of Starbucks reviews come from weekends, and those reviews average 0.09★ higher. That's probably a staffing effect more than anything about the product — weekends run differently than Tuesday mornings.</p>
+        <p class="text-[14px] text-text-body leading-relaxed">Weekends average 2.71★ vs. 2.99★ on weekdays. Critical rate goes from 45.0% to 53.2%. September is the worst month at 2.78★. More customers on weekends, same problems, just more visible.</p>
       </div>
     </div>
   </div>
@@ -414,59 +449,59 @@
       Five findings from 11,675 Starbucks reviews, 2017–2021. Each one points somewhere specific.
     </p>
 
-    <div class="divide-y divide-green/25 border-t border-green/25">
+    <ol class="divide-y divide-green/25 border-t border-green/25 list-none pl-0">
 
-      <div class="flex gap-10 py-6">
-        <div class="w-10 shrink-0 pt-1">
+      <li class="flex gap-6 sm:gap-10 py-6">
+        <div class="w-10 shrink-0 pt-1" aria-hidden="true">
           <span class="font-mono text-[11px] text-mid">01</span>
         </div>
         <div class="flex-1">
           <p class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-accent mb-2">Service is a coin flip</p>
-          <p class="text-[14px] text-text-body leading-relaxed">75.6% of Starbucks reviews mention service, more than any other topic. Of those, 44.4% are positive and 46.0% are critical. That's not a gap — it's a toss-up. Staff interaction shapes the overall rating more than anything else in the data, and it's also the thing most likely to go either way depending on the day, the shift, or who's at the register. Training consistency across locations is the fix. Nothing else moves this number.</p>
+          <p class="text-[14px] text-text-body leading-relaxed">75.6% of Starbucks reviews mention service. Of those, 44.4% are positive and 46.0% are critical. Whether someone walks away happy depends on the shift and who happens to be at the register, not any system. Training consistency across locations is the fix.</p>
         </div>
-      </div>
+      </li>
 
-      <div class="flex gap-10 py-6">
-        <div class="w-10 shrink-0 pt-1">
+      <li class="flex gap-6 sm:gap-10 py-6">
+        <div class="w-10 shrink-0 pt-1" aria-hidden="true">
           <span class="font-mono text-[11px] text-mid">02</span>
         </div>
         <div class="flex-1">
-          <p class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-accent mb-2">Weekend demand exposes the limits</p>
-          <p class="text-[14px] text-text-body leading-relaxed">Ratings drop 0.28 stars on Saturdays and Sundays, when review volume is also at its peak. Wait time already runs 49.4% critical on quieter days. Add more customers and a longer line, and it gets worse. The problems aren't new on weekends — weekends just put them in front of more people. Staffing adjustments and pre-shift prep on high-volume days are the clearest operational lever here.</p>
+          <p class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-accent mb-2">Weekends expose the limits</p>
+          <p class="text-[14px] text-text-body leading-relaxed">Weekend reviews average 2.71★ against 2.99★ on weekdays. Critical rate goes from 45.0% to 53.2%. The problems aren't weekend-specific; more customers just means more people running into them. Adjust weekend staffing and pre-shift prep.</p>
         </div>
-      </div>
+      </li>
 
-      <div class="flex gap-10 py-6">
-        <div class="w-10 shrink-0 pt-1">
+      <li class="flex gap-6 sm:gap-10 py-6">
+        <div class="w-10 shrink-0 pt-1" aria-hidden="true">
           <span class="font-mono text-[11px] text-mid">03</span>
         </div>
         <div class="flex-1">
-          <p class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-accent mb-2">First-time visitors leave the most disappointed</p>
-          <p class="text-[14px] text-text-body leading-relaxed">Customers with fewer than 10 Yelp reviews rate Starbucks at 2.43 stars. Those with 200+ give it 3.60. The 1.17-star gap between those groups is larger than the gap between Starbucks and the overall market. Regular café visitors adjust their expectations. People who don't come in often don't, and the experience doesn't do much to course-correct. App onboarding, loyalty entry, how staff treat someone who looks a little lost — that's where the first impression is actually made.</p>
+          <p class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-accent mb-2">Casual reviewers are the most disappointed</p>
+          <p class="text-[14px] text-text-body leading-relaxed">Reviewers with fewer than 10 Yelp reviews rate Starbucks 2.43★ with 64.3% critical. Those with 200+ give it 3.60★ at 19.6% critical. The 1.17-star gap between those groups is wider than the gap between Starbucks and the overall market. People who rarely review tend to write because something went wrong. App onboarding, loyalty entry, how staff treat someone who looks new: that's where the first impression gets made.</p>
         </div>
-      </div>
+      </li>
 
-      <div class="flex gap-10 py-6">
-        <div class="w-10 shrink-0 pt-1">
+      <li class="flex gap-6 sm:gap-10 py-6">
+        <div class="w-10 shrink-0 pt-1" aria-hidden="true">
           <span class="font-mono text-[11px] text-mid">04</span>
         </div>
         <div class="flex-1">
-          <p class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-accent mb-2">Ambiance is the one reliable strength — cleanliness is the threat to it</p>
-          <p class="text-[14px] text-text-body leading-relaxed">Ambiance is at 62.2% positive, the only topic in this analysis where praise clearly outnumbers complaints. The physical space holds up even when service and food quality don't. The threat is cleanliness: 47.2% positive but 40.5% critical across 1,609 mentions. A sticky table or a messy restroom doesn't erase good furniture and lighting, but it chips away at it. Visible cleanliness during peak hours is the simplest thing keeping this advantage intact.</p>
+          <p class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-accent mb-2">Ambiance is the one reliable strength — cleanliness threatens it</p>
+          <p class="text-[14px] text-text-body leading-relaxed">Ambiance scores 62.2% positive, the only topic where praise outnumbers complaints. The space holds up even when service and food quality don't. Cleanliness is the risk: 47.2% positive but 40.5% critical across 1,609 mentions. A messy table or dirty restroom undercuts the one thing working. Visible cleanliness during peak hours is the simplest fix.</p>
         </div>
-      </div>
+      </li>
 
-      <div class="flex gap-10 py-6">
-        <div class="w-10 shrink-0 pt-1">
+      <li class="flex gap-6 sm:gap-10 py-6">
+        <div class="w-10 shrink-0 pt-1" aria-hidden="true">
           <span class="font-mono text-[11px] text-mid">05</span>
         </div>
         <div class="flex-1">
           <p class="font-mono text-[9.5px] tracking-[0.14em] uppercase text-accent mb-2">Price complaints are concentrated and consistent</p>
-          <p class="text-[14px] text-text-body leading-relaxed">Price has a 66.9% failure rate across 1,027 mentions — the highest of any topic. Volume is lower than Service or Food Quality, but the signal is less noisy: when customers write about price, nearly two-thirds are unhappy. That's not something operations can change. What it does explain is a chunk of the negative sentiment that has nothing to do with staff or product execution — useful context when reading the overall numbers.</p>
+          <p class="text-[14px] text-text-body leading-relaxed">Price has a 66.9% failure rate across 1,027 mentions, worst of any topic. When customers write about price, about 2/3 are unhappy. Operations can't change pricing. But it explains a chunk of negative sentiment that has nothing to do with staff or product execution.</p>
         </div>
-      </div>
+      </li>
 
-    </div>
+    </ol>
   </div>
 
 
@@ -476,12 +511,12 @@
 <!-- ═══════════════════════════════════════ FOOTER ═══ -->
 <footer class="border-t border-green/40 px-5 sm:px-10 py-7 text-center font-serif text-[12px] text-muted">
   Data source:
-  <a class="text-accent hover:text-white hover:underline transition-colors" href="https://www.yelp.com/dataset" target="_blank" rel="noopener noreferrer">Yelp Open Dataset</a>
+  <a class="text-accent hover:text-white hover:underline transition-colors py-2 inline-block" href="https://www.yelp.com/dataset" rel="noopener noreferrer">Yelp Open Dataset</a>
   &nbsp;·&nbsp;
   Analysis by
-  <a class="text-accent hover:text-white hover:underline transition-colors" href="https://github.com/ww532" target="_blank" rel="noopener noreferrer">Xinwei Wang</a>
+  <a class="text-accent hover:text-white hover:underline transition-colors py-2 inline-block" href="https://github.com/ww532" rel="noopener noreferrer">Xinwei Wang</a>
   &nbsp;·&nbsp;
-  <a class="text-accent hover:text-white hover:underline transition-colors" href="https://github.com/ww532/coffee-chain-intelligence" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+  <a class="text-accent hover:text-white hover:underline transition-colors py-2 inline-block" href="https://github.com/ww532/coffee-chain-intelligence" rel="noopener noreferrer">View on GitHub</a>
 </footer>
 
 
@@ -527,11 +562,23 @@
   }, { rootMargin: '200px' });
 
   document.addEventListener('DOMContentLoaded', function() {
-    // Run initial scale pass (iframes not loaded yet, but sets transform ready)
     scaleIframes();
-    // Observe each chart container
     document.querySelectorAll('.chart-thumb').forEach(function(thumb) {
       observer.observe(thumb);
+    });
+
+    // Restore scroll position when returning from a chart
+    var savedY = sessionStorage.getItem('reportScrollY');
+    if (savedY) {
+      window.scrollTo(0, parseInt(savedY));
+      sessionStorage.removeItem('reportScrollY');
+    }
+
+    // Save scroll position before navigating to a chart
+    document.querySelectorAll('.card-overlay').forEach(function(link) {
+      link.addEventListener('click', function() {
+        sessionStorage.setItem('reportScrollY', window.scrollY);
+      });
     });
   });
 </script>

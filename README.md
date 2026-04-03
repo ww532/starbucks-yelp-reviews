@@ -1,87 +1,77 @@
-# Starbucks Customer Voice Intelligence
+# Starbucks on Yelp: Sentiment and Review Analysis
 
-A data-driven analysis of Starbucks customer reviews on Yelp, benchmarked against Dunkin' and the independent café market across the United States.
+381,999 Yelp reviews from 8,203 coffee-chain locations, 13 U.S. states, 2017–2021. The focus is Starbucks, compared against Dunkin' and independent cafes.
+
+**[View the interactive report](https://ww532.github.io/coffee-chain-intelligence/)**
+
+## What this project does
+
+- VADER sentiment scoring on all reviews
+- Multi-label topic tagging: Service, Food Quality, Ambiance, Wait Time, Price, Cleanliness
+- Reviewer segmentation into four tiers by Yelp activity
+- Brand comparison across Starbucks, Dunkin', and independent cafes
+- Time patterns by day of week and month
+
+## Key numbers
+
+| Metric | Starbucks | Dunkin' | Independent |
+|--------|-----------|---------|-------------|
+| Reviews | 11,675 | 6,866 | 362,334 |
+| Avg Stars | 2.90 | 2.05 | 4.01 |
+| % Positive | 42.4% | 21.5% | 73.7% |
+| % Critical | 47.6% | 71.2% | 17.2% |
+
+- 1-star is Starbucks' largest rating group at 33.7%, ahead of 5-star at 29.0%
+- Service comes up in 75.6% of reviews; 44.4% positive, 46.0% critical
+- Weekends average 2.71 stars vs. 2.99 on weekdays
+- Casual reviewers (under 10 reviews) rate 2.43 stars; Elite (200+) rate 3.60
 
 ## Dataset
 
-**Source:** [Yelp Open Dataset](https://www.yelp.com/dataset)
+[Yelp Open Dataset](https://www.yelp.com/dataset). Not included in this repo. Download the JSON files and put them in `data/raw/`.
 
-| Dimension | Value |
-|-----------|-------|
-| Reviews | 381,999 |
-| Businesses | 8,203 coffee-focused locations |
-| Time window | January 2017 – December 2021 |
-| Geography | 13 U.S. states, 500+ cities |
-| Primary subject | Starbucks (11,675 reviews) |
-| Direct competitor | Dunkin' (6,866 reviews) |
-| Market benchmark | Independent cafés (362,334 reviews) |
-
-## Key Findings
-
-**Starbucks averages 2.90 stars — 1.11 below the market benchmark of 4.01.** However, Dunkin' performs worse at 2.05 stars with a 71.2% critical review rate. The gap is a chain-format issue, not unique to Starbucks.
-
-**Service is the dominant variable.** 75.6% of Starbucks reviews mention service. With a 44.4% positive rate against a 46.0% failure rate, front-line staff execution is the single largest determinant of customer outcome.
-
-**Weekend demand degrades quality.** Saturday and Sunday produce the lowest average ratings (2.71 stars) despite the highest review volumes. The weekend critical rate reaches 53.2% versus 45.0% on weekdays.
-
-**64% of negative signal comes from casual reviewers.** Reviewers with fewer than 10 lifetime Yelp reviews average 2.43 stars. Elite reviewers (200+) average 3.60 stars — a 1.17-star gap larger than the Starbucks-to-market gap.
-
-## Project Structure
+## Project structure
 
 ```
-coffee-chain-intelligence/
-├── data/
-│   ├── raw/                      # Yelp JSON files (not tracked)
-│   └── processed/                # Parquet intermediates (not tracked)
-├── notebooks/
-│   ├── 01_data_extraction.ipynb
-│   ├── 02_data_cleaning.ipynb
-│   ├── 03_feature_engineering.ipynb
-│   ├── 04_pipeline_summary.ipynb
-│   ├── 05_volume_trends.ipynb
-│   ├── 06_rating_distribution.ipynb
-│   ├── 07_voc_loyalty.ipynb
-│   ├── 08_reviewer_segmentation.ipynb
-│   ├── 09_scorecard.ipynb
-│   ├── 10_time_patterns.ipynb
-│   └── 11_executive_summary.ipynb
-├── src/
-│   ├── ingestion.py              # Data loading and filtering
-│   ├── cleaning.py               # Deduplication, joins, type casting
-│   ├── mappings.py               # Feature engineering mappings
-│   └── nlp_utils.py              # VADER sentiment, TF-IDF extraction
-├── outputs/
-│   └── figures/                  # HTML chart outputs (not tracked)
-├── pipeline_runner.py            # Run all notebooks end-to-end
-├── requirements.txt
-└── .gitignore
+notebooks/
+  01_data_extraction.ipynb      Extract and filter from Yelp JSON
+  02_data_cleaning.ipynb        Deduplicate, normalize, join
+  03_feature_engineering.ipynb   Brand categories, sentiment, topic tags
+  04_pipeline_summary.ipynb     Validation and data dictionary
+  05_volume_trends.ipynb        Annual, quarterly, and state-level volume
+  06_rating_distribution.ipynb  Star ratings, tiers, sentiment trends
+  07_voc_loyalty.ipynb          Topic analysis and word clouds
+  08_reviewer_segmentation.ipynb  Rating by reviewer activity tier
+  09_scorecard.ipynb            Brand benchmarking across topics
+  10_time_patterns.ipynb        Day-of-week and monthly patterns
+  11_executive_summary.ipynb    Summary metrics and scorecard
+
+src/
+  ingestion.py                  Data loading utilities
+  cleaning.py                   Dedup, null handling, normalization
+  mappings.py                   Brand and topic category mappings
+  nlp_utils.py                  VADER scoring, topic tagging
+
+outputs/figures/
+  index.html                    Interactive report (GitHub Pages)
+  styles.css                    Compiled Tailwind CSS
+  *.html                        Plotly chart files
 ```
 
-## Methodology
-
-1. **Ingestion** — Filter Yelp businesses by coffee-related categories and name keywords. Stream-load reviews within the 2017–2021 date window.
-2. **Cleaning** — Deduplicate, cast types, normalize city names, join reviews with business and user metadata.
-3. **Feature engineering** — Map star tiers, brand categories, topic tags (rule-based keyword classification), user activity tiers, and datetime dimensions. Score review sentiment using VADER.
-4. **Analysis** — Volume trends, rating distribution, voice-of-customer topic analysis, reviewer segmentation, brand benchmarking scorecard, and time pattern analysis.
-
-## How to Run
-
-**Prerequisites:** Python 3.9+, Yelp Open Dataset JSON files in `data/raw/`.
+## How to run
 
 ```bash
 pip install -r requirements.txt
-
-# Run all notebooks sequentially
-python pipeline_runner.py
-
-# Or run individual notebooks
-jupyter nbconvert --to notebook --execute --inplace notebooks/01_data_extraction.ipynb
+python pipeline_runner.py        # runs notebooks 01-04
+# then open notebooks 05-11 individually
 ```
 
-## Tools and Libraries
+Requires Python 3.9+ and the Yelp dataset JSON files in `data/raw/`.
 
-- **pandas / pyarrow** — Data manipulation and Parquet I/O
-- **VADER (vaderSentiment)** — Lexicon-based sentiment scoring
-- **scikit-learn** — TF-IDF keyword extraction
-- **Plotly** — Interactive HTML chart generation
-- **matplotlib / WordCloud** — Word cloud visualization
+## Tools
+
+Python, pandas, VADER (vaderSentiment), Plotly, WordCloud, Tailwind CSS v4
+
+## Author
+
+Xinwei Wang

@@ -25,15 +25,21 @@
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
+    --color-bg: #0a2318;
     --color-surface: #1E3932;
+    --color-surface-2: #143028;
     --color-green: #006241;
-    --color-mid: #00754A;
+    --color-green-light: #00754A;
+    --color-mid: #4a9e7a;
     --color-accent: #D4E9E2;
-    --color-muted: #7a9080;
+    --color-muted: #7a9e8c;
+    --color-text: #e8ede9;
     --color-text-bright: #f0f5f2;
     --color-text-section: #ccd8d0;
     --color-text-card: #aec8bc;
     --color-text-body: #c2d4ca;
+    --color-shimmer-a: #f0f4f2;
+    --color-shimmer-b: #e4ece8;
   }
 }
 @layer base {
@@ -197,6 +203,17 @@
   .visible\! {
     visibility: visible !important;
   }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-width: 0;
+  }
   .absolute {
     position: absolute;
   }
@@ -335,6 +352,9 @@
   .inline {
     display: inline;
   }
+  .inline-block {
+    display: inline-block;
+  }
   .table {
     display: table;
   }
@@ -362,6 +382,9 @@
   .w-\[3px\] {
     width: 3px;
   }
+  .w-full {
+    width: 100%;
+  }
   .max-w-6xl {
     max-width: var(--container-6xl);
   }
@@ -373,6 +396,9 @@
   }
   .shrink-0 {
     flex-shrink: 0;
+  }
+  .border-collapse {
+    border-collapse: collapse;
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
@@ -431,6 +457,9 @@
   .resize {
     resize: both;
   }
+  .list-none {
+    list-style-type: none;
+  }
   .grid-cols-1 {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
@@ -455,9 +484,6 @@
   .gap-6 {
     gap: calc(var(--spacing) * 6);
   }
-  .gap-10 {
-    gap: calc(var(--spacing) * 10);
-  }
   .gap-y-3 {
     row-gap: calc(var(--spacing) * 3);
   }
@@ -481,6 +507,9 @@
   .overflow-hidden {
     overflow: hidden;
   }
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
@@ -499,6 +528,12 @@
   .border-b {
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
+  }
+  .border-green\/20 {
+    border-color: color-mix(in srgb, #006241 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-green) 20%, transparent);
+    }
   }
   .border-green\/25 {
     border-color: color-mix(in srgb, #006241 25%, transparent);
@@ -526,6 +561,12 @@
   }
   .px-5 {
     padding-inline: calc(var(--spacing) * 5);
+  }
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
+  }
+  .py-2\.5 {
+    padding-block: calc(var(--spacing) * 2.5);
   }
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
@@ -560,6 +601,9 @@
   .pt-12 {
     padding-top: calc(var(--spacing) * 12);
   }
+  .pr-4 {
+    padding-right: calc(var(--spacing) * 4);
+  }
   .pr-7 {
     padding-right: calc(var(--spacing) * 7);
   }
@@ -572,11 +616,23 @@
   .pb-14 {
     padding-bottom: calc(var(--spacing) * 14);
   }
+  .pl-0 {
+    padding-left: calc(var(--spacing) * 0);
+  }
+  .pl-4 {
+    padding-left: calc(var(--spacing) * 4);
+  }
   .text-center {
     text-align: center;
   }
   .text-justify {
     text-align: justify;
+  }
+  .text-left {
+    text-align: left;
+  }
+  .text-right {
+    text-align: right;
   }
   .font-mono {
     font-family: var(--font-mono);
@@ -653,6 +709,10 @@
   .tracking-\[0\.1em\] {
     --tw-tracking: 0.1em;
     letter-spacing: 0.1em;
+  }
+  .tracking-\[0\.12em\] {
+    --tw-tracking: 0.12em;
+    letter-spacing: 0.12em;
   }
   .tracking-\[0\.14em\] {
     --tw-tracking: 0.14em;
@@ -763,6 +823,63 @@
       }
     }
   }
+  .focus\:not-sr-only {
+    &:focus {
+      position: static;
+      width: auto;
+      height: auto;
+      padding: 0;
+      margin: 0;
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+    }
+  }
+  .focus\:absolute {
+    &:focus {
+      position: absolute;
+    }
+  }
+  .focus\:top-4 {
+    &:focus {
+      top: calc(var(--spacing) * 4);
+    }
+  }
+  .focus\:left-4 {
+    &:focus {
+      left: calc(var(--spacing) * 4);
+    }
+  }
+  .focus\:z-50 {
+    &:focus {
+      z-index: 50;
+    }
+  }
+  .focus\:rounded {
+    &:focus {
+      border-radius: 0.25rem;
+    }
+  }
+  .focus\:bg-surface {
+    &:focus {
+      background-color: var(--color-surface);
+    }
+  }
+  .focus\:px-4 {
+    &:focus {
+      padding-inline: calc(var(--spacing) * 4);
+    }
+  }
+  .focus\:py-2 {
+    &:focus {
+      padding-block: calc(var(--spacing) * 2);
+    }
+  }
+  .focus\:text-accent {
+    &:focus {
+      color: var(--color-accent);
+    }
+  }
   .sm\:grid-cols-2 {
     @media (width >= 40rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -824,13 +941,13 @@
 }
 @layer base {
   :focus-visible {
-    outline: 2px solid #D4E9E2;
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
     border-radius: 3px;
   }
   body {
-    background: #0c1510;
-    color: #e8ede9;
+    background: var(--color-bg);
+    color: var(--color-text);
   }
 }
 @layer components {
@@ -838,14 +955,11 @@
     border-radius: 0.25rem;
     border-style: var(--tw-border-style);
     border-width: 1px;
-    border-color: color-mix(in srgb, #006241 50%, transparent);
+    border-color: color-mix(in srgb, #00754A 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-green) 50%, transparent);
+      border-color: color-mix(in oklab, var(--color-green-light) 50%, transparent);
     }
-    background-color: color-mix(in srgb, #006241 25%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-green) 25%, transparent);
-    }
+    background-color: var(--color-green);
     padding-inline: calc(var(--spacing) * 2.5);
     padding-block: 3px;
     font-family: var(--font-mono);
@@ -871,11 +985,14 @@
     border-radius: var(--radius-lg);
     border-style: var(--tw-border-style);
     border-width: 1px;
-    border-color: color-mix(in srgb, #00754A 35%, transparent);
+    border-color: color-mix(in srgb, #00754A 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-mid) 35%, transparent);
+      border-color: color-mix(in oklab, var(--color-green-light) 40%, transparent);
     }
-    background: rgba(0, 98, 65, 0.15);
+    background: color-mix(in srgb, #006241 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: color-mix(in srgb, var(--color-green) 30%, transparent);
+    }
   }
   .chart-card {
     position: relative;
@@ -902,7 +1019,7 @@
     }
     &:hover {
       @media (hover: hover) {
-        border-color: color-mix(in srgb, #00754A 65%, transparent);
+        border-color: color-mix(in srgb, #4a9e7a 65%, transparent);
         @supports (color: color-mix(in lab, red, red)) {
           border-color: color-mix(in oklab, var(--color-mid) 65%, transparent);
         }
@@ -934,7 +1051,7 @@
     position: absolute;
     inset: calc(var(--spacing) * 0);
     z-index: 0;
-    background: linear-gradient(90deg, #f0f4f2 25%, #e4ece8 50%, #f0f4f2 75%);
+    background: linear-gradient(90deg, var(--color-shimmer-a) 25%, var(--color-shimmer-b) 50%, var(--color-shimmer-a) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.8s ease-in-out infinite;
   }
@@ -955,11 +1072,23 @@
     inset: calc(var(--spacing) * 0);
     z-index: 20;
   }
+  .hero-header {
+    background: linear-gradient(160deg, var(--color-green) 0%, var(--color-bg) 70%);
+  }
+  .hero-bar {
+    background: linear-gradient(90deg, var(--color-green-light) 0%, var(--color-accent) 40%, transparent 100%);
+  }
+  .hero-glow {
+    background: radial-gradient(circle, color-mix(in srgb, #006241 15%, transparent) 0%, transparent 70%);
+    @supports (color: color-mix(in lab, red, red)) {
+      background: radial-gradient(circle, color-mix(in srgb, var(--color-green) 15%, transparent) 0%, transparent 70%);
+    }
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .chart-shimmer {
     animation: none;
-    background: #f0f4f2;
+    background: var(--color-shimmer-a);
   }
   .chart-card {
     transition: none;
