@@ -1,7 +1,7 @@
 """
 nlp_utils.py
 ------------
-Natural language processing utilities for the Starbucks Customer Voice Intelligence project.
+Natural language processing utilities for the Starbucks on Yelp: Sentiment and Review Analysis project.
 
 Provides VADER-based sentiment scoring, TF-IDF keyword extraction,
 and stop-word filtering tailored for restaurant/café review text.

@@ -1,8 +1,8 @@
 # Starbucks on Yelp: Sentiment and Review Analysis
 
-381,999 Yelp reviews from 8,203 coffee-chain locations, 13 U.S. states, 2017–2021. The focus is Starbucks, compared against Dunkin' and independent cafes.
+381,999 Yelp reviews from 6,909 coffee-chain locations, 13 U.S. states, 2017–2021. The focus is Starbucks, compared against Dunkin' and independent cafes.
 
-**[View the interactive report](https://ww532.github.io/coffee-chain-intelligence/)**
+**[View the interactive report](https://ww532.github.io/starbucks-yelp-reviews/)**
 
 ## What this project does
 
@@ -62,8 +62,7 @@ outputs/figures/
 
 ```bash
 pip install -r requirements.txt
-python pipeline_runner.py        # runs notebooks 01-04
-# then open notebooks 05-11 individually
+python pipeline_runner.py        # runs all notebooks 01-11 in sequence
 ```
 
 Requires Python 3.9+ and the Yelp dataset JSON files in `data/raw/`.

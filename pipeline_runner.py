@@ -2,8 +2,8 @@
 """
 pipeline_runner.py
 ------------------
-End-to-end pipeline runner for the Starbucks Customer Voice Intelligence
-project. Executes all 11 analysis notebooks in sequence using nbconvert,
+End-to-end pipeline runner for the Starbucks on Yelp: Sentiment and Review
+Analysis project. Executes all 11 analysis notebooks in sequence using nbconvert,
 regenerating processed data and output figures from raw Yelp JSON files.
 
 Usage:
@@ -65,7 +65,7 @@ def run_notebook(nb_name: str) -> bool:
 
 
 def main():
-    print("Starbucks Customer Voice Intelligence — Pipeline Runner")
+    print("Starbucks on Yelp — Pipeline Runner")
     print(f"Project root: {PROJECT_ROOT}")
 
     failed = []

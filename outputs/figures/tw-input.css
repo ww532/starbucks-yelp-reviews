@@ -9,7 +9,7 @@
   --color-surface-2:    #143028;
   --color-green:        #006241;
   --color-green-light:  #00754A;
-  --color-mid:          #4a9e7a;
+  --color-mid:          #58b08a;
   --color-accent:       #D4E9E2;
   --color-muted:        #7a9e8c;
   --color-text:         #e8ede9;
@@ -41,7 +41,7 @@
            bg-green border border-green-light/50 px-2.5 py-[3px] rounded whitespace-nowrap;
   }
   .section-intro {
-    @apply text-[15px] leading-[1.75] text-text-body max-w-[72ch] mb-7;
+    @apply text-[15px] leading-[1.75] text-text-body mb-7;
   }
   .finding {
     @apply flex mt-6 rounded-lg overflow-hidden border border-green-light/40;

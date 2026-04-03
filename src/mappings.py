@@ -1,7 +1,7 @@
 """
 mappings.py
 -----------
-Category mapping functions for the Starbucks Customer Voice Intelligence project.
+Category mapping functions for the Starbucks on Yelp: Sentiment and Review Analysis project.
 
 Each function transforms one or more raw columns into a derived analytical
 dimension. All mappings are deterministic and can be applied independently.
@@ -56,7 +56,7 @@ _BRAND_MAP = [
 
 def map_brand_category(name: pd.Series) -> pd.Series:
     """
-    Normalize Yelp business names into five competitive brand segments.
+    Normalize Yelp business names into six competitive brand segments.
 
     Segments:
       - Starbucks         : primary brand under analysis

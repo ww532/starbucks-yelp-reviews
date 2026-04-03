@@ -1,7 +1,7 @@
 """
 ingestion.py
 ------------
-Data loading utilities for the Starbucks Customer Voice Intelligence project.
+Data loading utilities for the Starbucks on Yelp: Sentiment and Review Analysis project.
 
 Handles streaming ingestion of large Yelp JSON files (business, review, user)
 using memory-efficient line-by-line and chunk-based reading patterns.
