@@ -1,0 +1,12 @@
+pandas>=2.0
+numpy
+vaderSentiment
+matplotlib
+plotly
+wordcloud
+pyarrow
+scikit-learn
+jupyter
+ipykernel
+nbformat
+nbconvert

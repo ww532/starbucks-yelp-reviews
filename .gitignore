@@ -1,0 +1,14 @@
+data/raw/
+data/processed/
+**/.DS_Store
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+.env
+outputs/notebooks_html/
+outputs/full_report.html
+outputs/report.html
+outputs/index.html
