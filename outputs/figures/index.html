@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starbucks Customer Voice Intelligence — Interactive Charts</title>
+<style>
+  :root {
+    --green:      #00704A;
+    --green-light:#009060;
+    --green-dim:  #004d33;
+    --bg:         #0b0f0d;
+    --surface:    #141a17;
+    --surface2:   #1c2420;
+    --border:     #263027;
+    --text:       #e8ede9;
+    --muted:      #7a9080;
+    --accent-bar: 3px solid var(--green);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  header {
+    background: linear-gradient(160deg, #0f1a14 0%, #0b0f0d 60%);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 40px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green) 0%, var(--green-light) 50%, transparent 100%);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    top: -120px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,112,74,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .eyebrow {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: normal;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #f0f5f1;
+    margin-bottom: 16px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--green-light);
+  }
+
+  .subtitle {
+    font-family: 'Courier New', monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 36px;
+  }
+
+  /* Stats strip */
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    max-width: 640px;
+  }
+  .stat {
+    flex: 1;
+    min-width: 120px;
+    padding: 14px 20px;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-val {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--green-light);
+    font-family: 'Courier New', monospace;
+    display: block;
+  }
+  .stat-lbl {
+    font-size: 10.5px;
+    color: var(--muted);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  /* Section */
+  .section { margin-bottom: 52px; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nb-tag {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: rgba(0,112,74,0.12);
+    border: 1px solid rgba(0,112,74,0.3);
+    padding: 3px 9px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: normal;
+    color: #d4ddd6;
+    letter-spacing: -0.01em;
+  }
+
+  /* Card grid */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--green);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .card:hover {
+    border-color: var(--green-dim);
+    background: var(--surface2);
+    transform: translateY(-2px);
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-name {
+    font-size: 14px;
+    color: #c8d8cc;
+    line-height: 1.4;
+    margin-bottom: 14px;
+    padding-right: 8px;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green-light);
+    text-decoration: none;
+    transition: color 0.15s, gap 0.15s;
+  }
+  .card-link:hover { color: #00c880; gap: 10px; }
+  .card-link .arrow { transition: transform 0.15s; }
+  .card-link:hover .arrow { transform: translateX(2px); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 40px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  footer a {
+    color: var(--green);
+    text-decoration: none;
+  }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    header { padding: 44px 24px 36px; }
+    main   { padding: 40px 24px 60px; }
+    footer { padding: 24px; }
+    .stats { flex-direction: column; }
+    .stat  { border-right: none; border-bottom: 1px solid var(--border); }
+    .stat:last-child { border-bottom: none; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<header>
+  <div class="hero-inner">
+    <p class="eyebrow">Portfolio · Data Analysis · NLP</p>
+    <h1>Starbucks <em>Customer Voice</em><br>Intelligence</h1>
+    <p class="subtitle">
+      Sentiment analysis of 381,999 Yelp reviews &nbsp;·&nbsp;
+      Starbucks vs. Dunkin' vs. Independent Cafés &nbsp;·&nbsp;
+      13 U.S. states &nbsp;·&nbsp; 2017–2021
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-val">381,999</span>
+        <span class="stat-lbl">Reviews</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">8,203</span>
+        <span class="stat-lbl">Locations</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">13</span>
+        <span class="stat-lbl">States</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">5 yrs</span>
+        <span class="stat-lbl">2017–2021</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── CHARTS ── -->
+<main>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="nb-tag">NB 05</span>
+      <h2 class="section-title">Review Volume Trends</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="card-name">Annual Review Volume by Brand</p>
+        <a class="card-link" href="./05_volume_annual.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Year-over-Year Volume Trends</p>
+        <a class="card-link" href="./05_volume_by_year.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Review Volume by State</p>
+        <a class="card-link" href="./05_volume_by_state.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Average Star Rating by State</p>
+        <a class="card-link" href="./05_rating_by_state.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="nb-tag">NB 06</span>
+      <h2 class="section-title">Rating Distribution</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="card-name">Star Rating Distribution</p>
+        <a class="card-link" href="./06_star_distribution.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Star Tier Composition by Brand</p>
+        <a class="card-link" href="./06_star_tier.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Rating Trend Over Time</p>
+        <a class="card-link" href="./06_rating_trend.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Sentiment Score Trend Over Time</p>
+        <a class="card-link" href="./06_sentiment_trend.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="nb-tag">NB 07</span>
+      <h2 class="section-title">Voice of Customer</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="card-name">Topic Volume by Brand</p>
+        <a class="card-link" href="./07_topic_volume.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Topic Positive Rate by Brand</p>
+        <a class="card-link" href="./07_topic_rate.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Word Cloud — Positive Reviews</p>
+        <a class="card-link" href="./07_wordcloud_positive.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Word Cloud — Critical Reviews</p>
+        <a class="card-link" href="./07_wordcloud_critical.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="nb-tag">NB 08</span>
+      <h2 class="section-title">Reviewer Segmentation</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="card-name">Star Rating by Reviewer Activity Tier</p>
+        <a class="card-link" href="./08_reviewer_tier.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="nb-tag">NB 09</span>
+      <h2 class="section-title">Brand Benchmarking Scorecard</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="card-name">Brand Benchmarking Scorecard (Rose Chart)</p>
+        <a class="card-link" href="./09_scorecard_rose.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="nb-tag">NB 10</span>
+      <h2 class="section-title">Time Pattern Analysis</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="card-name">Rating by Day of Week</p>
+        <a class="card-link" href="./10_dow_rating.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="card">
+        <p class="card-name">Monthly Rating Trends</p>
+        <a class="card-link" href="./10_monthly_rating.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="nb-tag">NB 11</span>
+      <h2 class="section-title">Executive Summary</h2>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <p class="card-name">Executive KPI Scorecard</p>
+        <a class="card-link" href="./11_scorecard_summary.html" target="_blank">
+          Open Chart <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  Data source: <a href="https://www.yelp.com/dataset" target="_blank">Yelp Open Dataset</a>
+  &nbsp;·&nbsp;
+  Analysis by <a href="https://github.com/ww532" target="_blank">ww532</a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/ww532/coffee-chain-intelligence" target="_blank">View on GitHub</a>
+</footer>
+
+</body>
+</html>
