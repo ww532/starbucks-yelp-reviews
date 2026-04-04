@@ -33,29 +33,30 @@
 ## Project structure
 
 ```
+index.html                        Interactive report (GitHub Pages entry point)
+styles.css                        Compiled Tailwind CSS
+
 notebooks/
-  01_data_extraction.ipynb      Extract and filter from Yelp JSON
-  02_data_cleaning.ipynb        Deduplicate, normalize, join
-  03_feature_engineering.ipynb   Brand categories, sentiment, topic tags
-  04_pipeline_summary.ipynb     Validation and data dictionary
-  05_volume_trends.ipynb        Annual, quarterly, and state-level volume
-  06_rating_distribution.ipynb  Star ratings, tiers, sentiment trends
-  07_voc_loyalty.ipynb          Topic analysis and word clouds
+  01_data_extraction.ipynb        Extract and filter from Yelp JSON
+  02_data_cleaning.ipynb          Deduplicate, normalize, join
+  03_feature_engineering.ipynb    Brand categories, sentiment, topic tags
+  04_pipeline_summary.ipynb       Validation and data dictionary
+  05_volume_trends.ipynb          Annual, quarterly, and state-level volume
+  06_rating_distribution.ipynb    Star ratings, tiers, sentiment trends
+  07_voc_loyalty.ipynb            Topic analysis and word clouds
   08_reviewer_segmentation.ipynb  Rating by reviewer activity tier
-  09_scorecard.ipynb            Brand benchmarking across topics
-  10_time_patterns.ipynb        Day-of-week and monthly patterns
-  11_executive_summary.ipynb    Summary metrics and scorecard
+  09_scorecard.ipynb              Brand benchmarking across topics
+  10_time_patterns.ipynb          Day-of-week and monthly patterns
+  11_executive_summary.ipynb      Summary metrics and scorecard
 
 src/
-  ingestion.py                  Data loading utilities
-  cleaning.py                   Dedup, null handling, normalization
-  mappings.py                   Brand and topic category mappings
-  nlp_utils.py                  VADER scoring, topic tagging
+  ingestion.py                    Data loading utilities
+  cleaning.py                     Dedup, null handling, normalization
+  mappings.py                     Brand and topic category mappings
+  nlp_utils.py                    VADER scoring, topic tagging
 
 outputs/figures/
-  index.html                    Interactive report (GitHub Pages)
-  styles.css                    Compiled Tailwind CSS
-  *.html                        Plotly chart files
+  *.html                          Plotly chart files
 ```
 
 ## How to run
